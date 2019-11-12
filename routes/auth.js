@@ -55,7 +55,7 @@ const login = () => {
 		// eslint-disable-next-line no-undef
 		const token = jwt.sign({_id: user._id}, process.env.TOKEN_SECRET);
 
-		res.header('Athorization', token).status(200).send('Logged in!');
+		res.header('Authorization', token).status(200).send(token);
 	};
 };
 
