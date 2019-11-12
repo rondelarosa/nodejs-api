@@ -3,6 +3,7 @@ import User from '../models/user';
 import userValidation from '../validations/user';
 import loginValidation from '../validations/login';
 import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 
 const router = express.Router();
 
@@ -50,7 +51,11 @@ const login = () => {
 		const validPassword = await bcrypt.compare(req.body.password, user.password);
 		if (!validPassword) return res.status(401).send('Invalid email or password!');
 
-		res.status(200).send('Success');
+		// Create and assign a token
+		// eslint-disable-next-line no-undef
+		const token = jwt.sign({_id: user._id}, process.env.TOKEN_SECRET);
+
+		res.header('Athorization', token).status(200).send('Logged in!');
 	};
 };
 
